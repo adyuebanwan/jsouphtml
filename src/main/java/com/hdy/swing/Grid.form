@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.hdy.swing.Grid">
+  <grid id="27dc6" binding="mainPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="6" column-count="8" same-size-horizontally="true" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="738" height="578"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="a9286" class="javax.swing.JButton" binding="begin">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="开始采集"/>
+        </properties>
+      </component>
+      <component id="a89d0" class="javax.swing.JRadioButton" binding="companyProfile">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <selected value="true"/>
+          <text value="公司档案"/>
+        </properties>
+      </component>
+      <component id="9cced" class="javax.swing.JRadioButton" binding="otherRadio">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+          <text value="其他"/>
+        </properties>
+      </component>
+      <component id="d5176" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="输入"/>
+        </properties>
+      </component>
+      <component id="1372e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="输出"/>
+        </properties>
+      </component>
+      <component id="62201" class="javax.swing.JButton" binding="clearOutput">
+        <constraints>
+          <grid row="4" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="清空"/>
+        </properties>
+      </component>
+      <component id="329d" class="javax.swing.JButton" binding="copyOutput">
+        <constraints>
+          <grid row="3" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="复制"/>
+        </properties>
+      </component>
+      <component id="a4f9c" class="javax.swing.JButton" binding="copyInput">
+        <constraints>
+          <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="复制"/>
+        </properties>
+      </component>
+      <component id="f3ce4" class="javax.swing.JButton" binding="clearInput">
+        <constraints>
+          <grid row="2" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="清空"/>
+        </properties>
+      </component>
+      <scrollpane id="57ab1">
+        <constraints>
+          <grid row="3" column="1" row-span="2" col-span="6" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4da6e" class="javax.swing.JTextArea" binding="output" custom-create="true">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="5f8ba">
+        <constraints>
+          <grid row="1" column="1" row-span="2" col-span="6" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f2f93" class="javax.swing.JTextArea" binding="input" custom-create="true">
+            <constraints/>
+            <properties>
+              <enabled value="true"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="29288" class="javax.swing.JButton" binding="close">
+        <constraints>
+          <grid row="5" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="关闭"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="requestType">
+      <member id="a89d0"/>
+      <member id="9cced"/>
+    </group>
+  </buttonGroups>
+</form>
