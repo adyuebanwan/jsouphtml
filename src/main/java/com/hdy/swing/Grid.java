@@ -1,6 +1,5 @@
 package com.hdy.swing;
 
-import com.hdy.alibaba.CreditDetailHtml;
 import com.hdy.swing.thread.OutputRunable;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;

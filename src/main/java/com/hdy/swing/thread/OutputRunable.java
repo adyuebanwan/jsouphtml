@@ -1,6 +1,6 @@
 package com.hdy.swing.thread;
 
-import com.hdy.alibaba.CreditDetailHtml;
+import com.hdy.ali.CreditDetailHtml;
 import org.jsoup.helper.StringUtil;
 
 import javax.swing.*;
