@@ -12,12 +12,12 @@ import org.jsoup.select.Elements;
 public class OfferlistHtml {
     public String requestHtml(String url) throws Exception {
         Document doc = Jsoup.connect(url).get();
-        Element moduleMain = doc.select(".module-main").first();
-        Elements detalContents = moduleMain.select(".module-common").select(".ovavinfobox").select(".detal-content");
-        int size = detalContents.size();
-        if(size>0){
-            detalContents.get(size-1).remove();
-        }
-        return moduleMain.html();
+        Element offerListDom = doc.select(".wp-category-nav-unit").first();
+        return offerListDom.html();
+    }
+
+    public static void main(String[] args) throws Exception {
+        OfferlistHtml html = new OfferlistHtml();
+        System.out.println(html.requestHtml("http://wuxiujian518.1688.com/page/offerlist.htm"));
     }
 }

@@ -67,10 +67,8 @@ public class Grid {
                 }
                 boolean offerlistSelected = products.isSelected();
                 if (offerlistSelected) {
-                    JOptionPane.showMessageDialog(frame, "暂未开放");
-//                    OutputRunable outputRunable = new OutputRunable(begin, input, output, frame, PagingEnum.OFFERLIST);
-//                    new Thread(outputRunable).start();
-                    begin.setEnabled(true);
+                    OutputRunable outputRunable = new OutputRunable(begin, input, output, frame, PagingEnum.OFFERLIST);
+                    new Thread(outputRunable).start();
                     return;
                 }
 //                boolean otherRadioSelected = companyPhoto.isSelected();
