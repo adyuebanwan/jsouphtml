@@ -1,5 +1,7 @@
 package com.hdy.swing;
 
+import com.hdy.dto.PagingEnum;
+import com.hdy.safe.SafeUtil;
 import com.hdy.swing.thread.OutputRunable;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -22,13 +24,16 @@ public class Grid {
     private JPanel mainPanel;
     private JButton copyOutput;
     private JRadioButton companyProfile;
-    private JRadioButton otherRadio;
+    private JRadioButton companyPhoto;
     private JButton clearOutput;
     private JButton copyInput;
     private JButton clearInput;
     private JTextArea output;
     private JTextArea input;
     private JButton close;
+    private JRadioButton products;
+
+    private static int clickTimes;
 
     public Grid() {
         $$$setupUI$$$();
@@ -36,15 +41,39 @@ public class Grid {
         begin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                begin.setEnabled(false);
+                if (!SafeUtil.canUse()) {
+                    JOptionPane.showMessageDialog(frame, "1");
+                    return;
+                }
+                clickTimes++;
+                if (clickTimes > 10) {
+                    clickTimes = 0;
+                    output.setText("正在采集，请稍等...休息一下吧老婆，别太累了，喝口水暂停一下....");
+                } else {
+                    output.setText("正在采集，请稍等...");
+                }
                 boolean companyProfileSelected = companyProfile.isSelected();
                 if (companyProfileSelected) {
-                    OutputRunable outputRunable = new OutputRunable(input, output, frame);
+                    OutputRunable outputRunable = new OutputRunable(begin, input, output, frame, PagingEnum.CREDITDETAIL);
                     new Thread(outputRunable).start();
                     return;
-                } else {
-                    JOptionPane.showMessageDialog(frame, "暂未开放");
                 }
-//                boolean otherRadioSelected = otherRadio.isSelected();
+                boolean ambulistSelected = companyPhoto.isSelected();
+                if (ambulistSelected) {
+                    OutputRunable outputRunable = new OutputRunable(begin, input, output, frame, PagingEnum.ALBUMLIST);
+                    new Thread(outputRunable).start();
+                    return;
+                }
+                boolean offerlistSelected = products.isSelected();
+                if (offerlistSelected) {
+                    JOptionPane.showMessageDialog(frame, "暂未开放");
+//                    OutputRunable outputRunable = new OutputRunable(begin, input, output, frame, PagingEnum.OFFERLIST);
+//                    new Thread(outputRunable).start();
+                    begin.setEnabled(true);
+                    return;
+                }
+//                boolean otherRadioSelected = companyPhoto.isSelected();
 //                System.out.println(inputText + companyProfileSelected + otherRadioSelected);
             }
         });
@@ -114,51 +143,55 @@ public class Grid {
      */
     private void $$$setupUI$$$() {
         createUIComponents();
-        mainPanel.setLayout(new GridLayoutManager(6, 8, new Insets(0, 0, 0, 0), -1, -1, true, false));
+        mainPanel.setLayout(new GridLayoutManager(6, 15, new Insets(0, 0, 0, 0), -1, -1));
         begin = new JButton();
         begin.setText("开始采集");
-        mainPanel.add(begin, new GridConstraints(5, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(begin, new GridConstraints(5, 1, 1, 13, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         companyProfile = new JRadioButton();
         companyProfile.setEnabled(true);
         companyProfile.setSelected(true);
         companyProfile.setText("公司档案");
         mainPanel.add(companyProfile, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        otherRadio = new JRadioButton();
-        otherRadio.setEnabled(true);
-        otherRadio.setText("其他");
-        mainPanel.add(otherRadio, new GridConstraints(0, 2, 1, 5, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
-        label1.setText("输入");
-        mainPanel.add(label1, new GridConstraints(1, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label1.setText("公司网站首页地址");
+        mainPanel.add(label1, new GridConstraints(1, 0, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
-        label2.setText("输出");
+        label2.setText("输出所采集到内容");
         mainPanel.add(label2, new GridConstraints(3, 0, 2, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         clearOutput = new JButton();
         clearOutput.setText("清空");
-        mainPanel.add(clearOutput, new GridConstraints(4, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(clearOutput, new GridConstraints(4, 14, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         copyOutput = new JButton();
         copyOutput.setText("复制");
-        mainPanel.add(copyOutput, new GridConstraints(3, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(copyOutput, new GridConstraints(3, 14, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         copyInput = new JButton();
         copyInput.setText("复制");
-        mainPanel.add(copyInput, new GridConstraints(1, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(copyInput, new GridConstraints(1, 14, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         clearInput = new JButton();
         clearInput.setText("清空");
-        mainPanel.add(clearInput, new GridConstraints(2, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(clearInput, new GridConstraints(2, 14, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        mainPanel.add(scrollPane1, new GridConstraints(3, 1, 2, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        mainPanel.add(scrollPane1, new GridConstraints(3, 1, 2, 13, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         scrollPane1.setViewportView(output);
         final JScrollPane scrollPane2 = new JScrollPane();
-        mainPanel.add(scrollPane2, new GridConstraints(1, 1, 2, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        mainPanel.add(scrollPane2, new GridConstraints(1, 1, 2, 13, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         input.setEnabled(true);
         scrollPane2.setViewportView(input);
         close = new JButton();
         close.setText("关闭");
-        mainPanel.add(close, new GridConstraints(5, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(close, new GridConstraints(5, 14, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        products = new JRadioButton();
+        products.setText("供应产品");
+        mainPanel.add(products, new GridConstraints(0, 7, 1, 7, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        companyPhoto = new JRadioButton();
+        companyPhoto.setEnabled(true);
+        companyPhoto.setText("公司相册");
+        mainPanel.add(companyPhoto, new GridConstraints(0, 2, 1, 5, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(companyProfile);
-        buttonGroup.add(otherRadio);
+        buttonGroup.add(companyPhoto);
+        buttonGroup.add(products);
     }
 
     /**
