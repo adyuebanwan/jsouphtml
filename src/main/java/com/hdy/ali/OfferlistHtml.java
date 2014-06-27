@@ -21,18 +21,20 @@ public class OfferlistHtml {
         String pageOneUrl = buildPagingUrl(url,1);
         Document doc = Jsoup.connect(pageOneUrl).get();
         Element offerListDom = doc.select(".wp-category-nav-unit").first();
-        output.append(offerListDom.html());
+        outputAppend(output, offerListDom.html());
         Element productsPageOneDom = doc.select(".common-column-150").first();
         dealImgLazyLoad(productsPageOneDom);
-        output.append(productsPageOneDom.html());
+        outputAppend(output, productsPageOneDom.html());
         //leftPage
         int pageCount = Integer.valueOf(doc.select(".page-count").first().text().trim());
-        for(int i=2;i<pageCount;i++){
+        System.out.println(pageCount);
+        for(int i=2;i<=pageCount;i++){
             Thread.sleep(1000*1);
-            Document newDoc = Jsoup.connect(pageOneUrl).get();
+            String pageUrl = buildPagingUrl(url,i);
+            Document newDoc = Jsoup.connect(pageUrl).get();
             Element productsDom = newDoc.select(".common-column-150").first();
             dealImgLazyLoad(productsDom);
-            output.append(productsDom.html());
+            outputAppend(output, productsDom.html());
         }
         return null;
     }
@@ -61,6 +63,10 @@ public class OfferlistHtml {
         return url+"?tradenumFilter=false&priceFilter=false&mixFilter=false&privateFilter=false&groupFilter=false&sortType=tradenumdown&pageNum="+page+"#search-bar";
     }
 
+    private void outputAppend(JTextArea output,String content){
+        output.append(content);
+        output.setCaretPosition(output.getText().length());
+    }
     public static void main(String[] args) throws Exception {
 //        OfferlistHtml html = new OfferlistHtml();
 //        System.out.println(html.requestHtml("http://wuxiujian518.1688.com/page/offerlist.htm"));

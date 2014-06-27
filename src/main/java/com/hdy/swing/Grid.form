@@ -83,7 +83,9 @@
         <children>
           <component id="4da6e" class="javax.swing.JTextArea" binding="output" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <lineWrap value="true"/>
+            </properties>
           </component>
         </children>
       </scrollpane>

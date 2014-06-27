@@ -44,15 +44,15 @@ public class Grid {
                 begin.setEnabled(false);
                 if (!SafeUtil.canUse()) {
                     JOptionPane.showMessageDialog(frame, "1");
-//                    return;
+                    return;
                 }
                 clickTimes++;
-                if (clickTimes > 10) {
+                if (clickTimes > 20) {
                     clickTimes = 0;
-                    output.setText("正在采集，请稍等...休息一下吧老婆，别太累了，喝口水暂停一下....");
-                } else {
-                    output.setText("正在采集，请稍等...");
+                    JOptionPane.showMessageDialog(frame, "休息一下吧老婆，别太累了，喝口水暂停一下....");
                 }
+                begin.setText("正在采集，请稍等...");
+
                 boolean companyProfileSelected = companyProfile.isSelected();
                 if (companyProfileSelected) {
                     OutputRunable outputRunable = new OutputRunable(begin, input, output, frame, PagingEnum.CREDITDETAIL);
@@ -71,8 +71,6 @@ public class Grid {
                     new Thread(outputRunable).start();
                     return;
                 }
-//                boolean otherRadioSelected = companyPhoto.isSelected();
-//                System.out.println(inputText + companyProfileSelected + otherRadioSelected);
             }
         });
         close.addActionListener(new ActionListener() {
@@ -170,6 +168,7 @@ public class Grid {
         mainPanel.add(clearInput, new GridConstraints(2, 14, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         mainPanel.add(scrollPane1, new GridConstraints(3, 1, 2, 13, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        output.setLineWrap(true);
         scrollPane1.setViewportView(output);
         final JScrollPane scrollPane2 = new JScrollPane();
         mainPanel.add(scrollPane2, new GridConstraints(1, 1, 2, 13, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));

@@ -31,8 +31,7 @@ public class AlbumlistHtml {
         Document doc = Jsoup.parse(firstPageHtml);
         Element element = doc.select(".album-page-1").first();
         String firstPagePhoto = element.html();
-        output.append(firstPagePhoto);
-
+        outputAppend(output,firstPagePhoto);
         //追加分页数据
         List links = (List) page.getByXPath ("//li[@class='pagination']/a");
         if(null!=links){
@@ -41,7 +40,7 @@ public class AlbumlistHtml {
                 int min = 2;
                 int max = size-2;
                 for(int i=min;i<=max;i++){
-                    output.append(getNextPageContent(url, i));
+                    outputAppend(output,getNextPageContent(url, i));
                 }
             }
         }
@@ -50,7 +49,10 @@ public class AlbumlistHtml {
         resultMsg.setResult(null);
         return resultMsg;
     }
-
+    private void outputAppend(JTextArea output,String content){
+        output.append(content);
+        output.setCaretPosition(output.getText().length());
+    }
     private String getNextPageContent(String url,int idx) throws IOException {
         HtmlPage newPage = HtmlPager.getPage(url);
         WebClientFactory.getWebClient().waitForBackgroundJavaScript(1000*4);

@@ -32,6 +32,7 @@ public class OutputRunable  implements Runnable{
         if(StringUtil.isBlank(url)){
             JOptionPane.showMessageDialog(frame, "输入项不能为空类似 http://xxxx.1688.com/");
             begin.setEnabled(true);
+            begin.setText("开始采集");
             output.setText("");
             return;
         }
@@ -55,6 +56,7 @@ public class OutputRunable  implements Runnable{
         }catch (Exception e){
             JOptionPane.showMessageDialog(frame, "抓取失败，再试一次吧"+e.getMessage());
         }
+        begin.setText("开始采集");
         begin.setEnabled(true);
     }
 }

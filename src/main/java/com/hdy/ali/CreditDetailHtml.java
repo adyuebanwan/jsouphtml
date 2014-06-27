@@ -21,6 +21,10 @@ public class CreditDetailHtml {
         if(size>0){
             detalContents.get(size-1).remove();
         }
-        output.append(moduleMain.html());
+        outputAppend(output,moduleMain.html());
+    }
+    private void outputAppend(JTextArea output,String content){
+        output.append(content);
+        output.setCaretPosition(output.getText().length());
     }
 }
