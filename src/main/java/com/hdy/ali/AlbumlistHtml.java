@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,8 +21,8 @@ import java.util.List;
  * 799374340@qq.com
  */
 public class AlbumlistHtml {
-    public ResultMsg requestHtml(String url) throws Exception {
-        StringBuffer albumlistSb = new StringBuffer();
+    public ResultMsg requestHtml(String url,JTextArea output) throws Exception {
+        output.setText("");
         // 模拟浏览器打开一个目标网址
         HtmlPage page = HtmlPager.getPage(url);
         WebClientFactory.getWebClient().waitForBackgroundJavaScript(1000*3);
@@ -30,7 +31,7 @@ public class AlbumlistHtml {
         Document doc = Jsoup.parse(firstPageHtml);
         Element element = doc.select(".album-page-1").first();
         String firstPagePhoto = element.html();
-        albumlistSb.append(firstPagePhoto);
+        output.append(firstPagePhoto);
 
         //追加分页数据
         List links = (List) page.getByXPath ("//li[@class='pagination']/a");
@@ -40,13 +41,13 @@ public class AlbumlistHtml {
                 int min = 2;
                 int max = size-2;
                 for(int i=min;i<=max;i++){
-                    albumlistSb.append(getNextPageContent(url, i));
+                    output.append(getNextPageContent(url, i));
                 }
             }
         }
         WebClientFactory.closeAllWindows();
         ResultMsg resultMsg = new ResultMsg();
-        resultMsg.setResult(albumlistSb.toString());
+        resultMsg.setResult(null);
         return resultMsg;
     }
 

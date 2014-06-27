@@ -44,7 +44,7 @@ public class Grid {
                 begin.setEnabled(false);
                 if (!SafeUtil.canUse()) {
                     JOptionPane.showMessageDialog(frame, "1");
-                    return;
+//                    return;
                 }
                 clickTimes++;
                 if (clickTimes > 10) {

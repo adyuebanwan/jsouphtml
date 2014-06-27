@@ -43,17 +43,14 @@ public class OutputRunable  implements Runnable{
         }
 
         try{
-            String result = "";
             switch (this.pagingEnum){
                 case CREDITDETAIL:
-                    result = new CreditDetailHtml().requestHtml(url+"page/creditdetail.htm");break;
+                    new CreditDetailHtml().requestHtml(url+"page/creditdetail.htm",output);break;
                 case ALBUMLIST:
-                    result=new AlbumlistHtml().requestHtml(url+"page/albumlist.htm").getResult();break;
+                    new AlbumlistHtml().requestHtml(url+"page/albumlist.htm",output);break;
                 case OFFERLIST:
-                    result = new OfferlistHtml().requestHtml(url+"page/offerlist.htm");break;
+                    new OfferlistHtml().requestHtml(url+"page/offerlist.htm",output);break;
             }
-            output.setText("");
-            output.append(result);
             JOptionPane.showMessageDialog(frame, "抓取完成");
         }catch (Exception e){
             JOptionPane.showMessageDialog(frame, "抓取失败，再试一次吧"+e.getMessage());
